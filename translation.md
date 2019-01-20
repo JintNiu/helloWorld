@@ -17,3 +17,4 @@
 + [JavaScript Modules: From IIFEs to CommonJS to ES6 Modules](https://tylermcginnis.com/javascript-modules-iifes-commonjs-esmodules/)
 + [TypeScript: The Hard(er) Parts: Part 1](https://codeburst.io/typescript-the-hard-er-parts-part-1-88dd366c4544) *
 + [TypeScript: The Hard(er) Parts: Part 2](https://codeburst.io/typescript-the-hard-er-parts-part-2-d85c08c99ec3) *
++ [javascript christmas](https://javascript.christmas/)
