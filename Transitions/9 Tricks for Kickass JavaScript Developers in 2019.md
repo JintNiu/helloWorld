@@ -269,7 +269,7 @@ console.log(lang ? 'Ja' : 'Yes') // Ja
 console.log(lang === 'French' ? 'Bon soir' : 'Good evening') // Good eveing
 ```
 
-## 6.自判断链接
+## 6. 自判断链接
 
 当访问某个嵌套对象的属性时，由于不能确定目标对象或者属性性是否存在，而需要进行一系列判断：
 
@@ -291,7 +291,7 @@ const data = myObj?.firstProp?.secondProp?.actualData
 
 *目前，自判断链接还未纳入官方规范中，只处于第一阶段的实验特性。您需要在 `babelrc` 中添加 `@ babel / plugin-proposal-optional-chaining` 后方可使用它。*
 
-## 7.类属性和类绑定
+## 7. 类属性 & 绑定
 
 `JavaScript` 中经常会用到绑定（`bind`）。`ES6` 规范中箭头函数的引入，使 `JavaScript` 开发人员有了一种将函数自动绑定到执行上下文中的常用方法，同时这种方法非常重要。
 
@@ -320,13 +320,13 @@ const data = myObj?.firstProp?.secondProp?.actualData
 *目前，类属性还未纳入官方规范中，只处于第三阶段的实验特性。您需要在 `babelrc` 中添加 `@ babel / plugin-proposal-class-properties` 后方可使用。*
 
 
-## 8.使用 ParcelJS
+## 8. 使用 ParcelJS
 
 作为前端开发人员，保证会有打包项目或着转换代码的需求，对此，webpack 已经在很久之前提出先关规范了。第一次使用 webpack v1.0 时，我花了很长时间进行配置，虽然最终运行成功，但整个过程非常痛苦，而且成功后的我变得畏手畏脚，生怕破坏之前的配置。直到几个月前，`ParcelJS` 的发现使我心情大好，在提供开箱即用功能的同时，它还实现了按需配置，也可以支持类似于 webpack 或 babel 的插件系统，最重要的是它的速度极快。
 
 > 译者注：[ParcelJS](https://parceljs.org/)官网显示，parcelJS 的打包速度比 webpack 快 2 倍以上。
 
-## 9.封装自己的组件库
+## 9. 封装自己的组件库
 
 这是一个非常有趣的话题，关于它我有很多的想法。对于 `CSS`，很多人更倾向于使用类似于 BootStrap 这样的组件库。而对于 `JavaScript`，仍然有人调用 `jQuery` 或者其他库来实现验证、滑块等功能。首先不否认使用各种库的好处，但还是强烈建议可以亲手实现这些功能，而不是盲目地安装 npm 包。当整个团队正构建一个类似于 [moment.js](https://momentjs.com/) 或 [react-datepicker](https://reactdatepicker.com/) 的大型库（甚至框架）时，你没必要亲手实现它，但可以封装为属于自己的组件库，而且在实现组件库的同时，您可以：
 
