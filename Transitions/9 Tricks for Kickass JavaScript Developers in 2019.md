@@ -347,7 +347,7 @@ const data = myObj?.firstProp?.secondProp?.actualData
 
 ## 参考文章：
 
-1. [怎样处理async/await浪费性能问题](http://www.php.cn/js-tutorial-399247.html)
+1. [怎样处理 async/await 浪费性能问题](http://www.php.cn/js-tutorial-399247.html)
 2. [Async/Await 优于 Promise 的 6 个理由](https://www.oschina.net/translate/6-reasons-why-javascripts-async-await-blows-promises-away?cmp)
 3. [MDN - Falsy](https://developer.mozilla.org/zh-CN/docs/Glossary/Falsy)
 4. [MDN - Truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy)
