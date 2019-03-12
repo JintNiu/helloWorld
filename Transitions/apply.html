@@ -51,14 +51,30 @@
     console.log(pizza); //Pizza {name: "margherita", price: 50, category: "pizza"}
 
 
-    function sleep(){
-        var reply=[this.animal,'typically sleep between',this.sleepDuration].join(' ');
-        console.log(reply); // I typically sleep between 12 and 16 hours
-    }
-    var obj={
-        animal:'I',sleepDuration:'12 and 16 hours'
+    // function sleep(){
+    //     var reply=[this.animal,'typically sleep between',this.sleepDuration].join(' ');
+    //     console.log(reply); // I typically sleep between 12 and 16 hours
+    // }
+    // var obj={
+    //     animal:'I',sleepDuration:'12 and 16 hours'
+    // };
+    // sleep.call(obj);
+
+    var x = 9;
+    var module = {
+        x: 81,
+        getX: function () {
+            return this.x;
+        }
     };
-    sleep.call(obj);
+    console.log(module.getX()); // 81
+    var retrieveX = module.getX;
+    console.log(retrieveX()); // 9
+    var boundGetX = retrieveX.bind(module);
+    console.log(boundGetX()); // 81
+
+    (function () { }).constructor === Function ? console.log(true) : console.log(false);
+
 
 </script>
 
