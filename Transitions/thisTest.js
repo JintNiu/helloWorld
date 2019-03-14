@@ -1,3 +1,4 @@
+// 例
 // var car = {
 //     make: "Lamborghini",
 //     model: "Huracán",
@@ -45,7 +46,7 @@
 // var name = "Ferrari";
 // console.log(this.name);
 
-
+// 例一
 // var car = {
 //     make: "Lamborghini",
 //     model: "Huracán",
@@ -60,11 +61,12 @@
 //     model: "Italia",
 //     name: null
 // }
-// // anotherCar.name = car.fullName();
+// anotherCar.name = car.fullName();
 // car.fullName.call(anotherCar);
 // console.log(car.name);
 // console.log(anotherCar.name);
 
+// 例二
 // var cars = [
 //     { make: "Mclaren", model: "720s" },
 //     { make: "Ferrari", model: "Italia" }
@@ -72,12 +74,15 @@
 // var car = {
 //     cars: [{ make: "Lamborghini", model: "Huracán" }],
 //     fullName: function () {
+//         console.log(''+this)
 //         console.log(this.cars[0].make + " " + this.cars[0].model);
 //     }
 // }
-// var vehicle = car.fullName.bind(car);
+// var vehicle = car.fullName;
+// // var vehicle = car.fullName.bind(car);// Lamborghini Huracán
 // vehicle()
 
+// 例三
 // var car = {
 //     cars: [
 //         { make: "Lamborghini", model: "Huracán" },
@@ -87,33 +92,31 @@
 //     brand:"lamborghini",
 //     fullName: function () {
 //         var self=this;
-//         this.cars.forEach((car)=>{
+//         this.cars.forEach(function(car){
 //             console.log(car.model + " " + self.brand);
 //         })
 //     }
 // }
 // car.fullName();
 
-
-
 // Huracán undefined
 // 720s undefined
 // Italia undefined
 
-
+// 例四
 // var car = {
 //     make: "Lamborghini",
 //     model: "Huracán",
 //     fullName: function (cars) {
-//         cars.forEach((vehicle)=>{
+//         cars.forEach(function (vehicle) {
 //             console.log(vehicle + " " + this.model);
 //         })
 //     }
 // }
 // car.fullName(['lambo', 'ferrari', 'porsche']);
 
-make = "Porsche";
-model = "Carerra";
+// make = "Porsche";
+// model = "Carerra";
 
 var car = {
     make: "Lamborghini",
@@ -130,7 +133,7 @@ var truck = {
         callback();
     }
 }
+truck.fullName(car.fullName);
 truck.fullName(car.fullName.bind(car));
-
 
 
