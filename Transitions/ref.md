@@ -13,9 +13,7 @@
 + [Functional Programming Principles in Javascript
 ](https://medium.freecodecamp.org/functional-programming-principles-in-javascript-1b8fc6c3563f)
 + [These are the features in ES6 that you should know](https://medium.freecodecamp.org/these-are-the-features-in-es6-that-you-should-know-1411194c71cb)
-+ 
-
-
+  
 
 
 ## 系列
@@ -25,3 +23,4 @@
 + [TypeScript: The Hard(er) Parts: Part 1](https://codeburst.io/typescript-the-hard-er-parts-part-1-88dd366c4544) *
 + [TypeScript: The Hard(er) Parts: Part 2](https://codeburst.io/typescript-the-hard-er-parts-part-2-d85c08c99ec3) *
 + [javascript christmas](https://javascript.christmas/)
++ [Dev JavaScript](https://dev.to/t/javascript)
