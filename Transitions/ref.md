@@ -24,3 +24,4 @@
 + [TypeScript: The Hard(er) Parts: Part 2](https://codeburst.io/typescript-the-hard-er-parts-part-2-d85c08c99ec3) *
 + [javascript christmas](https://javascript.christmas/)
 + [Dev JavaScript](https://dev.to/t/javascript)
++ [JavaScript 工作原理](https://blog.sessionstack.com/tagged/tutorial)
