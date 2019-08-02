@@ -1,0 +1,418 @@
+
+# Git 学习
+
+> 下载地址：[Git](http://git-scm.com/download)
+
+# 1、简介
+
+### 三种状态：
+
+1. 已提交(committed)：数据已经安全的保存在本地数据库中
+2. 已修改(modified)：修改了文件，但还没保存到数据库中
+3. 已暂存(staged)：对一个已修改文件的当前版本做了标记，使之包含在下次提交的快照中
+
+### 三个工作区域：
+
+1. Git 仓库(.git directory)：保存项目的元数据和对象数据库
+2. 工作目录(working Directory)：项目的某个版本独立提取出来的内容，放在磁盘上供你使用或修改
+3. 暂存区域(Staging Area)：保存了下次将提交的文件列表信息
+
+![工作目录、暂存区域以及 Git 仓库](https://git-scm.com/book/en/v2/images/areas.png)
+
+
+### 工作流程
+
+1. 在工作目录中修改文件。
+2. 暂存文件，将文件的快照放入暂存区域。
+3. 提交更新，找到暂存区域的文件，将快照永久性存储到 Git 仓库目录。
+
+### 配置用户信息
+
+```
+git config --global user.name "John Doe"
+git config --global user.email johndoe@example.com
+```
+
+### 查看当前配置
+
+```
+git config --list
+git config user.name
+git help <verb>
+git <verb> --help
+```
+
+# 2、基础
+
+## 2.1 获取仓库
+
+### 从现有目录初始化仓库
+
+```
+git init  // 初始化，创建 `.git` 的子目录
+```
+
+跟踪项目文件
+
+```
+git add *.c
+git add LICENSE
+git commit -m 'initial project version'
+```
+
+### 克隆现有仓库
+
+```
+git clone [url] [自定义本地仓库名字] // 默认拉取远程 Git 仓库中的每一个文件的每一个版本
+```
+
+
+## 2.2 更新到仓库
+
+本地（工作目录）存在 git 仓库以及项目文件，在进行某些操作（增删改）之后，需要提交本次更新到仓库。
+
+工作目录中每个文件有两种状态：
+
+- **已跟踪**：被纳入了版本控制的文件，在上一次快照中有它们的记录，在工作一段时间后，它们的状态可能处于未修改，已修改或已放入暂存区
+- **未跟踪**：既不存在于上次快照的记录中，也没有放入暂存区。
+
+![文件状态变化周期](https://git-scm.com/book/en/v2/images/lifecycle.png)
+
+### 查看文件状态
+
+```
+git status (-s 或者 --short)  // -s 简要命令
+```
+
+- ??：新添加，未跟踪
+- A：新添加到暂存区
+- M(靠右)：已修改，未暂存
+- M(靠左)：已修改，已暂存
+
+
+### 添加内容到下一次提交中
+
+`git add [filename]  ` 执行后，文件状态变为 **暂存(Changes to be committed)**
+
+用途：
+1. 跟踪文件
+2. 把已跟踪文件放入暂存区
+3. 合并时把有冲突的文件标记为已解决状态
+4. ...
+
+### 忽略文件
+
+新建文件 `.gitignore`
+
+- 所有空行或者以 `＃` 开头的行都会被 Git 忽略。
+- 可以使用标准的 glob 模式匹配。
+- 匹配模式可以以（`/`）开头防止递归。
+- 匹配模式可以以（`/`）结尾指定目录。
+- 要忽略指定模式以外的文件或目录，可以在模式前加上惊叹号（`!`）取反。
+
+### 查看已暂存和未暂存的修改
+
+`git diff` : 查看**尚未暂存**的文件更新了哪些部分
+
+- 当前做的哪些更新还没有暂存？ 
+- 有哪些更新已经暂存起来准备好了下次提交？
+
+`git diff --staged / --cached` : 查看**已暂存**的将要添加到下次提交里的内容
+
+
+### 提交更新
+
+`git commit -m 提交信息`
+
+### 跳过使用暂存区域
+
+自动把所有已经跟踪过的文件暂存起来一并提交，从而跳过 `git add` 步骤
+
+`git commit -a -m 提交信息`
+
+### 移除文件
+
+从已跟踪文件清单中移除，然后提交。
+
+**情况一：**从暂存区移除直接移除 / 从工作目录手工删除后执行
+
+`git rm [filename]`：从已跟踪文件清单中移除，并从工作目录中删除，不会出现在未跟踪文件清单中
+
+>  如果删除之前修改过并且已经放到暂存区域：强制删除 `-f`
+
+**情况二：**将文件从暂存区移除，但保留当前工作目录
+
+`git rm --cached <filename>`
+
+
+### 移动文件
+
+重命名：`git mv <file_from> <file_to>`
+
+相当于：
+
+```
+mv [file_from] [file_to]
+git rm [file_from]
+git add [file_to]
+```
+
+
+## 2.3 提交历史
+
+`git log` 
+
+参数：
+
+参数 | 含义 
+:-: | :-: 
+`-p` | 显示每次提交内容差异 
+`-<n>` | 仅显示最近 n 次提交
+`-since=2.week` | 仅显示指定时间之后的提交
+`-until` | 仅显示指定时间之前的提交
+`-author` | 仅显示指定作者的提交
+`-committer` | 仅显示指定提交者相关的提交
+`--stat` | 简略统计信息
+`--graph` | 形象地展示分支、合并历史
+`--name-only` | 仅在提交信息后显示已修改的文件清单
+`--pretty = oneline/short/full/fuller/format:"自定义格式"` | 指定使用不同于默认格式的方式展示提交历史
+`git log --oneline --decorate --graph --all` | 输出你的提交历史、各个分支的指向以及项目的分支分叉情况
+
+
+## 2.4 撤销
+
+`git commit --amend`：将暂存区中的文件提交。
+
+1. 修改了ABC三个文件，假设路径为src/A src/B src/C
+2. 首先add A和B两个文件（假设忘记add C）
+    ```
+    git add src/A
+    git add src/B
+    ```
+3. `git commit -m "first"` 
+此时 commit 里的文件只有A和B两个
+4. 发现少 add 一个 C
+ `git add src/C`
+5. `git commit --amend`
+6. 在 log 中只有一次 log ，信息为 first ,但是文件有 ABC 三处修改。
+
+`git reset HEAD <filename>`：取消暂存文件
+`git checkout -- <filename>`：撤销对文件的修改，还原成上次提交时的样子
+
+
+## 2.5 远程仓库
+
+`git remote`：查看已配置的远程仓库服务器
+`git remote add <shortname> <url>`：添加一个新的远程 Git 仓库，同时指定简写
+`git fetch [remote-name]`：从远程仓库拉取所有还没有的数据。可以拥有远程仓库中所有分支的引用，但**不会自动合并或修改你当前的工作**
+`git pull`：自动的抓取然后**合并**远程分支到当前分支
+`git push [remote-name] [branch-name]`：将指定分支推送到指定服务器
+`git remote show [remote-name]`：查看远程仓库
+`git remote rename [oldname] [new] `：远程仓库重命名
+`git remote rm [remote-name]`：移除远程仓库
+
+
+## 2.6 标签
+
+`git tag`：显示标签
+`git tag -l 'v1.8.5*'`：显示 1.8.5 开头的标签
+`git tag -d <tagname>`：删除本地标签
+`git push origin :refs/tags/v1.4-lw`：更新远程仓库标签
+`git checkout <tagname>`：检出标签
+
+> 检出标签有副作用：使处于“分离头指针(detached HEAD)”状态。更新后标签不会发还是能变化，新提交将不属于任何分支，且无法访问。
+
+1. 附注标签
+
+`git tag -a v1.4 -m 'my version 1.4'`：打标签者的信息、打标签的日期时间、附注信息，然后显示具体的提交信息。
+
+2. 轻量标签
+
+`git tag v1.4-lw`：**没有**保存任何其他信息，只会显示提交信息
+
+3. 后期打标签
+
+`git tag -a v1.2 [(部门)校验和]`：校验和可以通过 log 查看
+
+4. 共享标签
+
+默认情况下，`git push` 命令并不会传送标签到远程仓库服务器上。
+
+`git push origin [tagname]`：共享指定分支
+`git push origin --tags`：共享所有标签
+
+## 2.7 Git 别名
+
+以下两条命令等价：
+
+```
+git unstage fileA
+git reset HEAD -- fileA
+```
+
+
+# 3、分支
+
+默认分支名字是 `master`， `Git` 中有一个指针 `HEAD`，指向当前所在的本地分支。
+
+**切换分支时，`HEAD` 指向该分支，同时将工作目录恢复成该分支所指向的快照内容。**
+
+`git log --oneline --decorate`：查看各个分支当前所指的对象
+`git log --oneline --decorate --graph --all` ：输出提交历史、各个分支的指向以及项目的分支分叉情况
+
+
+## 3.1 分支新建与合并
+
+`git branch <branch-name>`：新建分支
+`git checkout <branch-name>`：切换分支。
+
+> 以上两条命令可以简写为：`git checkout -b <branch-name>`
+
+`git merge <branch-name>`：合并分支
+`git branch -d <branch-name>`：删除无用分支
+
+如果开发历史从一个更早的地方开始分叉开来，master 分支所在提交并不是 iss53 分支所在提交的直接祖先，则 Git 会进行**三方合并**。然后将结果做一个新的快照，并且自动创建一个新的提交指向它（**一次合并提交**）。
+
+> **三方合并**：使用两个分支的末端所指的快照（C4 和 C5）以及这两个分支的工作祖先（C2）
+
+三方合并:
+
+![三方合并](https://git-scm.com/book/en/v2/images/basic-merging-1.png)
+
+一次合并提交:
+
+![一次合并提交](https://git-scm.com/book/en/v2/images/basic-merging-2.png)
+
+`git mergetool`：启动合适的可视化合并工具，用于解决冲突
+
+
+
+## 3.2 分支管理
+
+`git branch`：显示当前分支列表
+`git branch -v `：查看每一个分支的最后一次提交
+`git branch --merged`：查看哪些分支已经合并到当前分支
+`git branch --no-merged`：查看所有包含未合并工作的分支
+
+
+## 3.3 远程分支
+
+远程跟踪分支是远程分支状态的引用。 当你做任何网络通信操作时，它们会自动移动。以 `(remote)/(branch)` 形式命名。 
+
+> 例如，如果你想要看你最后一次与远程仓库 `origin` 通信时 `master` 分支的状态，你可以查看 `origin/master` 分支。 
+
+
+![克隆之后的服务器与本地仓库](https://git-scm.com/book/en/v2/images/remote-branches-1.png "克隆之后的服务器与本地仓库:")
+
+> 如果你在本地的 `master` 分支做了一些工作，同时其他人推送提交到 `git.ourcompany.com` 并更新了它的 `master` 分支，那么你的提交历史将向不同的方向前进。 另外，只要你不与 `origin` 服务器连接，你的 `origin/master` 指针就不会移动。
+
+
+![本地与远程的工作可以分叉](https://git-scm.com/book/en/v2/images/remote-branches-2.png "本地与远程的工作可以分叉")
+
+`git fetch origin`：从远程服务器抓取本地没有的数据，并且更新本地数据库
+
+**`git fetch` 更新你的远程仓库引用**
+
+![git fetch 更新你的远程仓库引用](https://git-scm.com/book/en/v2/images/remote-branches-3.png "git fetch 更新你的远程仓库引用")
+
+**`git push (remote) (branch)`：公开分享分支，将其推送到有写入权限的远程仓库上（推送本地的某分支，将其作为远程仓库的某分支）**
+
+`git checkout -b [branch] [remotename]/[branch]`：从远程分支新建一个本地分支，并切换到该分支。
+
+**`git branch -u (--set-upstream-to) origin/serverfix`：设置已有的本地分支跟踪一个刚刚拉取下来的远程分支，或者想要修改正在跟踪的上游分支**
+
+`git branch -vv`：查看设置的所有跟踪分支，以及每一个分支正在跟踪哪个远程分支与本地分支是否是领先、落后或是都有。
+
+**`git fetch`：从服务器上抓取本地没有的数据时，它并不会修改工作目录中的内容。 它只会获取数据然后让你自己合并**
+
+> `git pull` = `git fetch` + `git merge`
+
+> `git pull` 会查找当前分支所跟踪的服务器与分支，从服务器上抓取数据然后尝试合并入那个远程分支。
+
+`git push origin --delete <branch-name>`：删除远程分支
+
+
+
+## 3.4 变基
+
+![分叉的提交历史](https://git-scm.com/book/en/v2/images/basic-rebase-1.png "分叉的提交历史")
+
+变基：你可以提取在 C4 中引入的补丁和修改，然后在 C3 的基础上应用一次。
+
+**好处：**为了确保在向远程分支推送时能保持提交历史的整洁
+
+> **原理：**
+> 1. 首先找到这两个分支（即当前分支 experiment、变基操作的目标基底分支 master）的最近共同祖先 C2，
+> 2. 然后对比当前分支相对于该祖先的历次提交，提取相应的修改并存为临时文件，然后将当前分支指向目标基底 C3, 
+> 3. 最后以此将之前另存为临时文件的修改依序应用。
+
+```
+// 变基
+git checkout experiment
+git rebase master
+```
+
+
+![将 C4 中的修改变基到 C3 上](https://git-scm.com/book/en/v2/images/basic-rebase-3.png "将 C4 中的修改变基到 C3 上")
+
+
+```
+// 合并
+git checkout master
+git merge experiment
+
+```
+
+![master 分支的快进合并](https://git-scm.com/book/en/v2/images/basic-rebase-4.png "master 分支的快进合并")
+
+
+多条分支的变基：`git rebase [basebranch] [topicbranch]`
+
+如：` git rebase --onto master server client`
+> 取出 client 分支，找出处于 client 分支和 server 分支的共同祖先之后的修改，然后把它们在 master 分支上重放一遍”。
+
+**不要对在你的仓库外有副本的分支执行变基。**
+
+
+
+# 4、服务器
+
+## 4.1 协议
+
+1. **本地协议（Local）**
+
+团队每一个成员都对一个共享的文件系统
+
+`git clone /opt/git/project.git`
+
+增加本地版本库到现有 Git 项目：
+`git remote add local_proj /opt/git/project.git`
+
+> 优点：简单，直接使用了现有的文件权限和网络访问权限
+> 缺点：共享文件系统比较难配置，不方便从多个位置访问
+
+
+2. **HTTP 协议**
+
+    1. 智能 HTTP 协议
+    2. 哑 HTTP 协议
+
+> 优点：只需要一个 URL 以及服务器只在需要授权时提示输入授权信息
+> 缺点：架设麻烦
+
+3. **SSH 协议**
+
+指定 `ssh://` URL：`git clone ssh://user@server/project.git`
+
+> 优点：架设简单，访问安全
+> 缺点：不能实现匿名访问，不利于开源项目
+
+4. **Git 协议**
+
+监听在一个特定的端口（9418），类似于 SSH 服务，但是访问无需任何授权，没有任何安全措施。
+
+> 优点：传输协议里最快的，省去了加密和授权的开销
+> 缺点：缺乏授权机制。
+
+
+
